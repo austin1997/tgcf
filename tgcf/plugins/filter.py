@@ -24,14 +24,15 @@ class TgcfFilter(TgcfPlugin):
             textf.whitelist = [item.lower() for item in textf.whitelist]
 
     def modify(self, tm: TgcfMessage) -> TgcfMessage:
+        if tm.text and self.text_safe(tm):
+            logging.info("Message passed text filter")
+            return tm
 
         if self.users_safe(tm):
             logging.info("Message passed users filter")
             if self.files_safe(tm):
                 logging.info("Message passed files filter")
-                if self.text_safe(tm):
-                    logging.info("Message passed text filter")
-                    return tm
+                return tm
 
     def text_safe(self, tm: TgcfMessage) -> bool:
         flist = self.filters.text
