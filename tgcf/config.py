@@ -193,6 +193,7 @@ async def load_from_to(
         if not forward.use_this:
             continue
         source = forward.source
+        logging.info(f"Qurey source {source}")
         if not isinstance(source, int) and source.strip() == "":
             continue
         src = await _(forward.source)
